@@ -111,7 +111,6 @@ class NovalnetServiceProvider extends ServiceProvider
                 AfterBasketItemAdd::class,
                 AfterBasketCreate::class
             ]);
-	$this->getLogger(__METHOD__)->error($payContainer);
         $payContainer->register('plenty_novalnet::NOVALNET_PREPAYMENT', NovalnetPrepaymentPaymentMethod::class,
             [
                 AfterBasketChanged::class,
@@ -184,7 +183,8 @@ class NovalnetServiceProvider extends ServiceProvider
             $captureProcedureTitle,
             '\Novalnet\Procedures\CaptureEventProcedure@run'
         );
-        
+    $this->getLogger(__METHOD__)->error($captureProcedureTitle);
+
         // Event for Onhold - Void Process
         $voidProcedureTitle = [
             'de' => 'Novalnet | Stornieren',
