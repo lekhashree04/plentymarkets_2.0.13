@@ -121,6 +121,7 @@ class PaymentController extends Controller
      */
     public function paymentResponse() {
         $responseData = $this->request->all();
+        
         $isPaymentSuccess = isset($responseData['status']) && in_array($responseData['status'], ['90','100']);
         $notificationMessage = $this->paymentHelper->getNovalnetStatusText($responseData);
         if ($isPaymentSuccess) {
@@ -147,6 +148,7 @@ class PaymentController extends Controller
         $notificationMessage = $this->paymentHelper->getNovalnetStatusText($requestData);
         $basket = $this->basketRepository->load();  
         $billingAddressId = $basket->customerInvoiceAddressId;
+        $this->getLogger(__METHOD__)->error($key, $billingAddressId);
         $address = $this->addressRepository->findAddressById($billingAddressId);
         foreach ($address->options as $option) {
             if ($option->typeId == 9) {
